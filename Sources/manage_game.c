@@ -6,7 +6,7 @@
 /*   By: ahamouda <ahamouda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 14:33:29 by ahamouda          #+#    #+#             */
-/*   Updated: 2017/11/05 18:44:54 by ahamouda         ###   ########.fr       */
+/*   Updated: 2017/11/08 17:04:29 by ahamouda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,25 @@ static void			decay_health_point(void)
 	philosophers = g_data->philosophers;
 	if (--philosophers->health_point <= 0)
 		g_data->all_alive = 0;
-	flockfile(stdout);
-	ft_printf("hp : %d | ", philosophers->health_point);
+//	flockfile(stdout);
+//	ft_printf("hp : %d | ", philosophers->health_point);
 	philosophers = philosophers->left;
 	while (philosophers != g_data->philosophers)
 	{
 		if (--philosophers->health_point <= 0)
 			g_data->all_alive = 0;
-		if (philosophers->left == g_data->philosophers)
-			ft_printf("%d\n", philosophers->health_point);
-		else
-			ft_printf("%d | ", philosophers->health_point);
+	//	if (philosophers->left == g_data->philosophers)
+	//		ft_printf("%d\n", philosophers->health_point);
+	//	else
+	//		ft_printf("%d | ", philosophers->health_point);
 		philosophers = philosophers->left;
 	}
-	funlockfile(stdout);
+//	funlockfile(stdout);
 }
 
 static void			reset_turn_token(void)
 {
-	static unsigned int	n_turn = 1;
+	//static unsigned int	n_turn = 1;
 	t_philosopher		*philo;
 
 	philo = g_data->philosophers;
@@ -60,9 +60,9 @@ static void			reset_turn_token(void)
 		philo->turn_token = 0;
 		philo = philo->left;
 	}
-	flockfile(stdout);
-	ft_printf("Tour numero %d\n", n_turn++);
-	funlockfile(stdout);
+//	flockfile(stdout);
+//	ft_printf("Tour numero %d\n", n_turn++);
+//	funlockfile(stdout);
 }
 
 static unsigned int	check_turn_token(void)
@@ -89,6 +89,7 @@ void				*manage_game(void* nothing)
 	pthread_mutex_lock(&g_data->mutex);
 //	ft_putstr("Locked!\n");
 //	g_data->skip_turn = 1;
+//	need to get manage first ?
 	g_data->start_time = time(0);
 	(void)nothing;
 	exit_value = 0;
@@ -96,6 +97,7 @@ void				*manage_game(void* nothing)
 	// create UI
 	while (!exit_value)
 	{
+		refresh_gui();
 		// refresh UI
 	//	exit_value = check_exit_condition(); // put it after decay_health_point if not needed to be called once when starting manage_game
 		pthread_mutex_unlock(&g_data->mutex);
@@ -108,6 +110,7 @@ void				*manage_game(void* nothing)
 		exit_value = check_exit_condition();
 	}
 	g_data->exit_value = exit_value;
+	
 	pthread_mutex_unlock(&g_data->mutex);
 //	printf("end of manage_game\n");
 	return (0);

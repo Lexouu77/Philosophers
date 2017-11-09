@@ -6,7 +6,7 @@
 /*   By: ahamouda <ahamouda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 14:52:29 by ahamouda          #+#    #+#             */
-/*   Updated: 2017/11/05 18:44:49 by ahamouda         ###   ########.fr       */
+/*   Updated: 2017/11/08 17:04:27 by ahamouda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../lib42/includes/ft_printf.h"
 
 # include <pthread.h>
+# include <locale.h>
 
 # define DISPLAY_PROGRAM_INFO 0
 
@@ -25,11 +26,14 @@
 
 # define DISPLAY_WARNING 0
 
+# define DISABLE_WARNING 1
+
 # define MAX_LIFE 10
-# define EAT_T 1 // roundup/down value.?
-# define REST_T 1 // check hp and REST_T/EAT_T/THINK_T error if >  MAX_LIFE
-# define THINK_T 1
-# define TIMEOUT 60
+# define EAT_T 2 // roundup/down value.?
+# define REST_T 3 // check hp and REST_T/EAT_T/THINK_T error if >  MAX_LIFE
+# define THINK_T 2
+# define TIMEOUT 60 // TODO : printf_fd si option
+# define LOG_CURSES 0 // Affiche des choses dans un coin, i.e. getch value ? what's happenin in the game
 
 typedef struct s_data t_data;
 extern t_data *g_data;
@@ -87,5 +91,7 @@ typedef struct				s_data
 
 void						*play_game(void*);
 void						*manage_game(void*);
+void						create_gui(void);
+void						refresh_gui(void);
 
 #endif

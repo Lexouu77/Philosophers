@@ -6,7 +6,7 @@
 /*   By: ahamouda <ahamouda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 14:52:25 by ahamouda          #+#    #+#             */
-/*   Updated: 2017/11/05 18:44:47 by ahamouda         ###   ########.fr       */
+/*   Updated: 2017/11/08 14:04:40 by ahamouda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,13 @@ static void	kill_philosophers(void)
 	g_data->philosophers->right->left = 0;
 	to_kill = g_data->philosophers;
 	in_death_row = g_data->philosophers->left;
-	ft_printf("Destroying mutex.\n");
+//	ft_printf("Destroying mutex.\n");
 	pthread_mutex_destroy(&g_data->mutex);
-//	pthread_rwlock_destroy(&g_data->rw_lck);
-	ft_printf("Free of managing thread.\n");
+//	ft_printf("Free of managing thread.\n");
 	pthread_detach(g_data->thread);
 	while (to_kill)
 	{
-		ft_printf("Free of thread number : %d.\n", to_kill->number);
+//		ft_printf("Free of thread number : %d.\n", to_kill->number);
 		pthread_detach(to_kill->thread);
 		free(to_kill);
 		if (!in_death_row)
@@ -138,10 +137,9 @@ static void	create_thread(void)
 {
 	t_philosopher	*crazy_guy;
 
-	ft_printf("Mutex initiation.\n");
+//	ft_printf("Mutex initiation.\n");
 	pthread_mutex_init(&g_data->mutex, PTHREAD_MUTEX_DEFAULT);
-//	pthread_rwlock_init(&g_data->rw_lck, NULL);
-	ft_printf("Creation of 1 managing thread and 7 others threads.\n");
+//	ft_printf("Creation of 1 managing thread and 7 others threads.\n");
 	if (pthread_create(&g_data->thread, NULL, manage_game, NULL))
 		exit(-1);
 	crazy_guy = g_data->philosophers->left;
@@ -176,7 +174,8 @@ static void	wait_for_thread(void)
 }
 
 int			main(void)
-{/*
+{
+	/*
 //	time_t	now;
 //	time_t	after;
 	char*	l;
@@ -224,22 +223,20 @@ int			main(void)
 //	usleep(500000);
 //	usleep(500000);
 //	if (time(0) - now == 1)
+
+	// TODO Check arg
+	create_gui();
 	init_global_philosophers();
 	create_thread();
 	wait_for_thread();
-	if (g_data->all_alive)
-		printf("Now, it is time... To DAAAAAAAANCE !!!");
+//	delete_gui(); ??
+	endwin();
+	if (g_data->exit_value == 1)
+		printf("Now, it is time... To DAAAAAAAANCE !!!"); // en fonction de loption gui
 	kill_philosophers();
 	return (0);
 }
 
 /*
-** Check what to do
-** Do action
-** Lose hp unless if eating
-** 
-*/
-
-/*
-** TODO : Make another thread managing everything ?
+** TODO : pthread_barrier_t mybarrier;
 */

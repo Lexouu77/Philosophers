@@ -6,7 +6,7 @@
 #    By: ahamouda <ahamouda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/27 01:48:43 by ahamouda          #+#    #+#              #
-#    Updated: 2017/11/01 16:46:21 by ahamouda         ###   ########.fr        #
+#    Updated: 2017/11/07 15:59:07 by ahamouda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ CFLAGS = -Wall -Werror -Wextra
 SFLAGS = -Weverything
 OFLAGS = -O3 -march=native
 DFLAGS = -g3 -fsanitize=address
+
 CFLAGS += $(SFLAGS)
 
 CFLAGS += -I $(HEADER_PATH)
@@ -37,7 +38,7 @@ HEADER = $(HEADER_FILE:%.h=$(HEADER_PATH)/%.h)
 
 LIB = ./lib42/libftprintf.a
 
-LIB_LINKER = -L ./lib42/ -lftprintf -lpthread
+LIB_LINKER = -L ./lib42/ -lftprintf -lpthread -lncurses
 
 #LIB_HEADER.
 
@@ -49,6 +50,7 @@ SRC_SUBDIR += .
 SRC += philosophers.c
 SRC += play_game.c
 SRC += manage_game.c
+SRC += manage_gui.c
 
 OBJ_PATH = Objects
 OBJECTS = $(addprefix $(OBJ_PATH)/, $(SRC:%.c=%.o))

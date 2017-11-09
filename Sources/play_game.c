@@ -6,7 +6,7 @@
 /*   By: ahamouda <ahamouda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 21:38:51 by ahamouda          #+#    #+#             */
-/*   Updated: 2017/11/05 18:44:52 by ahamouda         ###   ########.fr       */
+/*   Updated: 2017/11/08 17:04:25 by ahamouda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void				keep_waiting(t_philosopher *philo)
 			philo->is_eating = 0;
 			philo->health_point = g_data->max_life;
 			philo->is_resting = 1;
-			philo->time_left_action = g_data->rest_time;
+			philo->time_left_action = g_data->rest_time; // care + 1?
 			philo->is_chopsticks_available = 1;
 			if (philo->borrowed_chopsticks == 1)
 				philo->left->is_chopsticks_available = 1;
@@ -83,7 +83,7 @@ static void				start_eating(t_philosopher *philo)
 			philo->right->thinking_theft = 1;
 		philo->borrowed_chopsticks = 2;
 	}
-	philo->time_left_action = g_data->eat_time;
+	philo->time_left_action = g_data->eat_time; // + 1?
 }
 
 /*
@@ -104,7 +104,7 @@ static void				play_turn(t_philosopher *philo)
 		return ;
 	}
 	philo->is_thinking = 1;
-	philo->time_left_action = g_data->think_time;
+	philo->time_left_action = g_data->think_time; // + 1
 }
 
 void					*play_game(void* nothing)
@@ -114,9 +114,9 @@ void					*play_game(void* nothing)
 	(void)nothing;
 	pthread_mutex_lock(&g_data->mutex);
 	philo = get_philo();
-	flockfile(stdout);
-	ft_printf("Philo n %d\n", philo->number);
-	funlockfile(stdout);
+//	flockfile(stdout);
+//	ft_printf("Philo n %d\n", philo->number);
+//	funlockfile(stdout);
 	while (1)
 	{
 		pthread_mutex_unlock(&g_data->mutex);
